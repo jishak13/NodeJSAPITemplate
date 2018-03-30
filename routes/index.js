@@ -7,7 +7,7 @@ router.use(function TL (req,res,next) {
     next();
 });
 
-/* GET users listing. */
+/* GET index listing. */
 router.get('/', function(req, res, next) {
   res.send("<p style='color: red;'> Hi </p>");
 });

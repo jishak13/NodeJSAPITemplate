@@ -9,14 +9,18 @@ router.use( (req,res,next) => {
 });
 router.get('/', (req,res,next) => {
     queryExecutor("Select * from Infosol.Todos;",res);
-    // console.log(todoList);
     // res.send(todoList);
 })
 router.post('/', (req,res,next) => {
-    console.log(req.body.ID);
-    console.log(req.body.Description);
-    todoList.push(req.body);
-    res.send(todoList);
+    //  console.log(req.body.ID);
+    // console.log(req.body.Description);
+    queryExecutor("USE Infosol;");
+    console.log('Query 2');
+    queryExecutor(" INSERT INTO TODOS(DESCRIPTION) VALUES('"+req.body.Description+"');",res);
+    // console.log(req.body.ID);
+    // console.log(req.body.Description);
+    // todoList.push(req.body);
+    // res.send(todoList);
 });
 
 /* GET users listing. */

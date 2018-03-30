@@ -9,9 +9,7 @@ let bodyParser        = require('body-parser');
 let phonegap          = require('connect-phonegap');
 
 var index             = require('./routes/index');
-// var competence        = require('./routes/competences');
-// var competenceSearch  = require('./routes/competenceSearch');
-//Create variables for MySql Database Implementation
+
 let mysql             = require('mysql');
 let connString        = require('./modules/db');
 let queryResults      = "";
@@ -38,6 +36,8 @@ app.use(function(req,res,next) {
 });
 
 /**Setting the Routes */
-app.use('/todos',todos);
-app.use('/',index);
+// Root route is /infosol
+app.use('/infosol/todos',todos);
+
+app.use('/infosol/gwc/cat',index);
 

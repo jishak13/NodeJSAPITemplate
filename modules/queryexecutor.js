@@ -1,48 +1,35 @@
-var mysql             = require('mysql'),
-connString        = require('../modules/db'),
-queryResults,sql,
-con               = mysql.createConnection(connString),
-databaseConnected = false;
+// Declarations and Initializations
+let mysql             = require('mysql');
+let connString        = require('../modules/db');
+let queryResults      = undefined;
+let con               = mysql.createConnection(connString);
+let databaseConnected = false;
 
+
+ // Try connecting to the database
+ con.connect((err) => {
+    //  Throw the Error
+    if(err) {
+        throw err;
+    }
+    // Tell the user console that the database connection has been established
+       //Un-comment to see the results on your terminal/prompt
+    // console.log("Connected to the Database GWC");
+
+});
 //function to execute the query with the database
 function executeQuery(sql,res) {
-    var result = "";
+   
+    //Execute the query function 
+    /** Supplies the sql , and a callback function once the connection executes the query
+     * Once executed, errors will be thrown while results will be used for the response back.
+     */
+    con.query(sql, ( err, results ) => {
 
-    //If the API is not already connected
-    if(!databaseConnected){
-        // Try connecting to the database
-       con.connect(function(err) {
-        //If there is an error connecting to the database
-        if (err) {
-            //Log the Error
-            console.log('Connection To The Database Failed Error:' + err)
-            databaseConnected = false;
-            result =  { "result":"Connection to the database failed" };
-        } else {
-
-            databaseConnected = true;
-            //Log Connected to the Database
-            console.log("Connected to the Database GWC");
-            //Set the SQL Statement for the Index Route
-            //    res.status(200).send(res)
-                con.query(sql, function( err, results, fields ){
-
-                    if(err) {
-                        console.log("The Error is Here " + err);
-                        res.status(500).send("There was an error in query execution.");
-                
-                    } else {
-                       console.log(results);
-                 
-                        res.status(200).send( results);
-                    }
-                });
-            
-            }
-        });
-  
-   }
-  
-
+        if(err) throw err;
+        //Un-comment to see the results on your terminal/prompt
+        console.log(results);    
+        res.send(results);          
+    });
 }
 module.exports = executeQuery;

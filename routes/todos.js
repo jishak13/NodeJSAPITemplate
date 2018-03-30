@@ -1,42 +1,36 @@
-var express = require('express');
-var router = express.Router();
-// var competences = require('../competences');
-var queryExecutor    = require('../modules/queryexecutor');
-var todoList = require('../todos.js');
+// Declarations and Initializations
+let express = require('express');
+let router = express.Router();
+let queryExecutor    = require('../modules/queryexecutor');
+let todoList = require('../todos.js');
+let sql = undefined;
+
+//Router usage: Log to the console time any http protocol gets used ( Get, Put , Post Delete )
 router.use( (req,res,next) => {
   console.log('Time: ' , Date.now());
     next();
 });
+
+//Get the default route infosol/todos
 router.get('/', (req,res,next) => {
-    queryExecutor("Select * from Infosol.Todos;",res);
-    // res.send(todoList);
-})
-router.post('/', (req,res,next) => {
-    //  console.log(req.body.ID);
-    // console.log(req.body.Description);
-    queryExecutor("USE Infosol;");
-    console.log('Query 2');
-    queryExecutor(" INSERT INTO TODOS(DESCRIPTION) VALUES('"+req.body.Description+"');",res);
-    // console.log(req.body.ID);
-    // console.log(req.body.Description);
-    // todoList.push(req.body);
-    // res.send(todoList);
+    sql = "Select * from Todos";
+    queryExecutor(sql,res);
 });
 
-/* GET users listing. */
-router.get('/:searchKeyword', function(req, res, next) {
-    console.log('Searching' + req.param.searchKeyword);
-//   var searchkeyword = req.params.searchKeyword;
-//   console.log(searchkeyword);
-//       console.log("Request to search for " + searchkeyword);
-//       queryExecutor("Select * From GWC.competences" +     
-//                    " where categoryid like '%"  + searchkeyword + "%';",res)
-//       if(!text || text===""){
-//           res.status(500).send("Error: Could not find these competences");
-//       }   else {
-//           result = queryExecutor("Select * from GWC.")
-//       }
-   
+//Post a todo to the default route infosol/todos
+//This uses the body of the request.
+router.post('/', (req,res,next) => {
+    sql = " INSERT INTO Todos(DESCRIPTION) VALUES('"+req.body.Description+"')";
+    queryExecutor(sql,res);
+  
+});
+
+//Get a list of todos matching the keyword
+router.get('/:searchKeyword', (req, res, next) => {
+    console.log('Searching' + req.params.searchKeyword);
+    if(req.params.searchKeyword = undefined) req.params.searchKeyword = '*'
+    sql = "Select * from Todos where Description like '%" + req.params.searchKeyword  + "%';";
+    queryExecutor(sql,res);
 });
 
 module.exports = router;

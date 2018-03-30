@@ -1,9 +1,9 @@
 // The connection details for the database connection to mysql
 let connectionJSONString = {
-    host:"127.0.0.1",
+    host:"localhost",
     database:"Infosol",
-    user: "jishak",
-    password: "Sqlrule$"
+    user: "api",
+    password: "as32x83s$"
 };
 //Export this module for other files to implement
 module.exports = connectionJSONString;

@@ -1,7 +1,6 @@
 // The connection details for the database connection to mysql
 let connectionJSONString = {
     host:"localhost",
-    database:"Infosol",
     user: "api",
     password: "as32x83s$"
 };

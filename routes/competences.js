@@ -13,23 +13,23 @@ router.use( (req,res,next) => {
 
 //Get the default route infosol/todos
 router.get('/', (req,res,next) => {
-    sql = "Select * from Infosol.Todos";
+    sql = "Select * from gwc.competences";
     queryExecutor(sql,res);
 });
 
 //Post a todo to the default route infosol/todos
 //This uses the body of the request.
-router.post('/', (req,res,next) => {
-    sql = " INSERT INTO Infosol.Todos(DESCRIPTION) VALUES('"+req.body.Description+"')";
-    queryExecutor(sql,res);
+// router.post('/', (req,res,next) => {
+//     sql = "";
+//     queryExecutor(sql,res);
   
-});
+// });
 
 //Get a list of todos matching the keyword
 router.get('/:searchKeyword', (req, res, next) => {
     console.log('Searching' + req.params.searchKeyword);
     if(req.params.searchKeyword = undefined) req.params.searchKeyword = '*'
-    sql = "Select * from Infosol.Todos where Description like '%" + req.params.searchKeyword  + "%';";
+    sql = "Select * from gwc.competences where statement like '%" + req.params.searchKeyword  + "%';";
     queryExecutor(sql,res);
 });
 

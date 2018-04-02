@@ -27,8 +27,8 @@ router.post('/', (req,res,next) => {
 
 //Get a list of todos matching the keyword
 router.get('/:searchKeyword', (req, res, next) => {
-    console.log('Searching' + req.params.searchKeyword);
-    if(req.params.searchKeyword = undefined) req.params.searchKeyword = '*'
+    console.log('Searching ' + req.params.searchKeyword);
+    // if(req.params.searchKeyword = undefined) req.params.searchKeyword = '*'
     sql = "Select * from Infosol.Todos where Description like '%" + req.params.searchKeyword  + "%';";
     queryExecutor(sql,res);
 });

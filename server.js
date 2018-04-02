@@ -10,6 +10,8 @@ let index             = require('./routes/index');
 let todos             = require('./routes/todos');
 let users             = require('./routes/users');
 let competences       = require('./routes/competences');
+let shootings         = require('./routes/shootings');
+let assessments       = require('./routes/assessments');
 //Use Body Parser when reading data from a request
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
@@ -30,7 +32,9 @@ app.use(function(req,res,next) {
 /**Setting the Routes */
 // Root route is /infosol
 app.use('/infosol/todos',todos);
+app.use('/infosol/training/pdstats',shootings);
 app.use('/infosol/gwc/competences',competences);
 app.use('/infosol/gwc/users',users);
+app.use('/infosol/gwc/assessments/',assessments);
 
 

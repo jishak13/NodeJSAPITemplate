@@ -12,8 +12,18 @@ router.use( (req,res,next) => {
 });
 
 //Get the default route infosol/todos
-router.get('/view', (req,res,next) => {
-    sql = "Select * from gwc.competences";
+router.get('/profiles/job', (req,res,next) => {
+    sql = "Select * from gwc.jobprofiles where userID = " + req.body.userID + ";";
+    queryExecutor(sql,res);
+});
+//Get the default route infosol/todos
+router.get('/profiles/organization', (req,res,next) => {
+    sql = "Select * from gwc.organizationprofiles where userID = " + req.body.userID + ";";
+    queryExecutor(sql,res);
+});
+//Get the default route infosol/todos
+router.get('/profiles/individual', (req,res,next) => {
+    sql = "Select * from gwc.individualprofiles where userID = " + req.body.userID + ";";
     queryExecutor(sql,res);
 });
 
@@ -28,7 +38,7 @@ router.get('/view', (req,res,next) => {
 //Get a list of todos matching the keyword
 router.get('/:searchKeyword', (req, res, next) => {
     console.log('Searching' + req.params.searchKeyword);
-    // if(req.params.searchKeyword = undefined) req.params.searchKeyword = '*'
+    if(req.params.searchKeyword = undefined) req.params.searchKeyword = '*'
     sql = "Select * from gwc.competences where statement like '%" + req.params.searchKeyword  + "%';";
     queryExecutor(sql,res);
 });

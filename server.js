@@ -6,8 +6,9 @@ let server            = http.createServer(app);
 let bodyParser        = require('body-parser');
 let phonegap          = require('connect-phonegap');
 
-let todos             = require('./routes/todos');
 let index             = require('./routes/index');
+let todos             = require('./routes/todos');
+let users             = require('./routes/users');
 let competences       = require('./routes/competences');
 //Use Body Parser when reading data from a request
 app.use(bodyParser.json());
@@ -30,5 +31,6 @@ app.use(function(req,res,next) {
 // Root route is /infosol
 app.use('/infosol/todos',todos);
 app.use('/infosol/gwc/competences',competences);
+app.use('/infosol/gwc/users',users);
 
 

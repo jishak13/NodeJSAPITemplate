@@ -7,7 +7,7 @@ let sql = undefined;
 
 //Router usage: Log to the console time any http protocol gets used ( Get, Put , Post Delete )
 router.use( (req,res,next) => {
-  console.log('Time: ' , Date.now());
+    console.log('Time: ' , Date.now());
     next();
 });
 

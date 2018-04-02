@@ -12,7 +12,7 @@ router.use( (req,res,next) => {
 });
 
 //Get the default route infosol/todos
-router.get('/', (req,res,next) => {
+router.get('/view', (req,res,next) => {
     sql = "Select * from gwc.competences";
     queryExecutor(sql,res);
 });

@@ -29,7 +29,7 @@ router.get('/view', (req,res,next) => {
 router.get('/:searchKeyword', (req, res, next) => {
     console.log('Searching' + req.params.searchKeyword);
     // if(req.params.searchKeyword = undefined) req.params.searchKeyword = '*'
-    sql = "Select * from gwc.competences where statement like '%" + req.params.searchKeyword  + "%';";
+    sql = "call searchcompetences('"+ req.params.searchKeyword +"');";
     queryExecutor(sql,res);
 });
 

@@ -24,6 +24,10 @@ function executeQuery(sql,res) {
     /** Supplies the sql , and a callback function once the connection executes the query
      * Once executed, errors will be thrown while results will be used for the response back.
      */
+    con.query("Use GWC;",(err,results) => {
+        if(err) throw err;
+        
+    });
     con.query(sql, ( err, results ) => {
 
         if(err) throw err;

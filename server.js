@@ -12,6 +12,7 @@ let users             = require('./routes/users');
 let competences       = require('./routes/competences');
 let shootings         = require('./routes/shootings');
 let assessments       = require('./routes/assessments');
+let performance       = require('./routes/performance');
 //Use Body Parser when reading data from a request
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
@@ -35,6 +36,6 @@ app.use('/infosol/todos',todos);
 app.use('/infosol/training/pdstats',shootings);
 app.use('/infosol/gwc/competences',competences);
 app.use('/infosol/gwc/users',users);
-app.use('/infosol/gwc/assessments/',assessments);
-
+app.use('/infosol/gwc/assessments',assessments);
+app.use('/infosol/performancereviews', performance);
 

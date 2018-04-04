@@ -1,7 +1,7 @@
 // Declarations and Initializations
 let express = require('express');
 let router = express.Router();
-let queryExecutor    = require('../modules/queryexecutor');
+let queryExecutor = require('../modules/queryexecutor');
 let todoList = require('../todos.js');
 let sql = undefined;
 
@@ -16,12 +16,23 @@ router.get('/:searchKeyword/', (req,res,next) => {
     sql = "Select * from ipeer."+ req.params.searchKeyword + ";";
     queryExecutor(sql,res);
 });
-router.get('/questions/'), (req,res,next) => {
+
+router.post('/peerreview', (req,res,next) => {
+    let userReviewing = req.body.ReviewingUser;
+    let userBeingReviewed = req.body.UserBeingReviewed;
+    console.log("User Reviewing: " + userReviewing + "\nUser Being Reviewed: " + userBeingReviewed);
+    console.log();
+    sql = "call ipeer.addPeerReview('"+userReviewing+"','"+userBeingReviewed+"');";
+     queryExecutor(sql,res);
+});
+
+router.get('/questions/', (req,res,next) => {
     sql = "select * from ipeer.question;";
     queryExecutor(sql,res);
-}
+});
 
-router.get('/results/'),(req,res,next) => {
+router.get('/results/',(req,res,next) => {
     res.send('Will be added soon! Stay Tuned!');
-}
+});
+
 module.exports = router;

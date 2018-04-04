@@ -22,7 +22,6 @@ router.get('/view', (req,res,next) => {
 // router.post('/', (req,res,next) => {
 //     sql = "";
 //     queryExecutor(sql,res);
-  
 // });
 
 //Get a list of todos matching the keyword

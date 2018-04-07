@@ -14,7 +14,7 @@ let shootings         = require('./routes/shootings');
 let assessments       = require('./routes/assessments');
 let performance       = require('./routes/performance');
 //Use Body Parser when reading data from a request
-app.use(bodyParser.json());
+app.use(bodyParser());
 app.use(bodyParser.urlencoded({extended:false}));
 
 //Tell the server where to listen 

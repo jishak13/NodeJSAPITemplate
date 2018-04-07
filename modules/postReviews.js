@@ -11,15 +11,15 @@ let sql = [];
  con.connect((err) => {
     //  Throw the Error
     if(err) {
-        throw err;
+       
     }
     // Tell the user console that the database connection has been established
        //Un-comment to see the results on your terminal/prompt
     // console.log("Connected to the Database GWC");
 
 });
-//function to execute the query with the database
-function executeQuery(sql,res) {
+
+function conQuery(sql,res) {
         
     //Execute the query function 
     /** Supplies the sql , and a callback function once the connection executes the query
@@ -29,13 +29,19 @@ function executeQuery(sql,res) {
         if(err) res.send({"Error":"Error Using Database"});
         
     });
-   
-    con.query(sql,(err,results) => {
-        if(err)  res.send({"Error":"Error Executing  Database Query"});
+    let i  = 0;
+    let success = true;
+    sql.forEach(statement => {
+    con.query(statement,(err,results) => {
+        if(err)  sucess = false;
         else {
-            res.send(results);
+          
         }
     });
-
+    
+   });
+  let response = (success ==true ? "Sucess" : "Failure");
+    res.send(response);
 }
-module.exports = executeQuery;
+
+module.exports = conQuery;

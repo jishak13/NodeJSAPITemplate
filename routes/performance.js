@@ -50,17 +50,15 @@ function execute(sql,conn){
 
 }
 router.post('/peerreview/', (req,res,next) => {
-    console.log(JSON.stringify(req.body));
     let parsedBody = req.body;
-    console.log(parsedBody);
     let userReviewing = req.body.ReviewingUser;
     let userBeingReviewed = req.body.UserBeingReviewed;
     let reviews = req.body.Reviews;
     let prid = undefined;
-    console.log("User Reviewing: ");
-    console.log(userReviewing);
-    console.log("User Being Reviewed: ");
-    console.log(userBeingReviewed);
+    // console.log("User Reviewing: ");
+    // console.log(userReviewing);
+    // console.log("User Being Reviewed: ");
+    // console.log(userBeingReviewed);
     console.log("Reviews: ");
     console.log(reviews);
     if(req.body!=undefined){
@@ -86,13 +84,13 @@ router.post('/peerreview/', (req,res,next) => {
             con.query(sql,(err,results)=>{
                 if(err) throw err;
                 else{
-                    console.log(prid);
+                    // console.log(prid);
                     if(reviews!=undefined){
                         reviews.forEach((review)=>{
                         let statement = "Insert into Ipeer.Reviews(peerreviewid,questionid,answer) Values ("+
                         results[0].id + "," + review.QuestionID + ",'"+
                                             review.Answer + "');"
-                                            console.log(statement);
+                                            // console.log(statement);
                             execute(statement,con);
                         });
                     

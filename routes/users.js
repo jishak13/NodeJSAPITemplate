@@ -4,7 +4,79 @@ let router = express.Router();
 let queryExecutor    = require('../modules/queryexecutor');
 let todoList = require('../todos.js');
 let sql = undefined;
+let lodash = require('lodash');
+let config = require('../config');
+let jwt = require('jsonwebtoken');
+let db2 = require('../db2');
 
+
+function createToken(user) {
+    return jwt.sign(lodash.omit(user, 'password'), config.secretKey, { expiresIn: 60*60*5 });
+}
+
+function getUserDB(username, done) {
+    db2.get().query('SELECT * FROM Ipeer.users WHERE username = ? LIMIT 1', [username], function(err, rows, fields) {
+      if (err) throw err;
+      done(rows[0]);
+    });
+}
+
+router.post('/create', function(req, res) {  
+    if (!req.body.username || !req.body.password) {
+      return res.status(400).send("You must send the username and the password");
+    }
+    getUserDB(req.body.username, function(user){
+      if(!user) {
+        user = {
+          username: req.body.username,
+          password: req.body.password,
+          email: req.body.email
+        };
+        db2.get().query('INSERT INTO Ipeer.users SET ?', [user], function(err, result){
+          if (err) throw err;
+          newUser = {
+            id: result.insertId,
+            username: user.username,
+            password: user.password,
+            email: user.email
+          };
+          res.status(201).send({
+            id_token: createToken(newUser)
+          });
+        });
+      }
+      else res.status(400).send("A user with that username already exists");
+    });
+});
+
+router.post('/login', function(req, res) {
+    if (!req.body.username || !req.body.password) {
+      return res.status(400).send("You must send the username and the password");
+    }
+    getUserDB(req.body.username, function(user){
+      if (!user) {
+        return res.status(401).send("The username is not existing");
+      }
+      if (user.hashPassword !== req.body.password) {
+        return res.status(401).send("The username or password don't match");
+      }
+      res.status(201).send({
+        id_token: createToken(user),
+        user: user
+      });
+    });
+  });
+
+router.get('/user/check/:username', function(req, res) {
+    if (!req.params.username) {
+      return res.status(400).send("You must send a username");
+    }
+    getUserDB(req.params.username, function(user){
+      if(!user) res.status(201).send({username: "OK"});
+      else res.status(400).send("A user with that username already exists");
+    });
+  });
+  
 //Router usage: Log to the console time any http protocol gets used ( Get, Put , Post Delete )
 router.use( (req,res,next) => {
   console.log('Time: ' , Date.now());
@@ -53,7 +125,7 @@ router.get('/:searchKeyword', (req, res, next) => {
     console.log('Searching' + req.params.searchKeyword);
     
     if(req.params.searchKeyword = undefined) req.params.searchKeyword = '*'
-    sql = "Select * from gwc.users where fname like '%" + req.params.searchKeyword  + "%';";
+    sql = "Select * from ipeer.users where fname like '%" + req.params.searchKeyword  + "%';";
     queryExecutor(sql,res);
 });
 

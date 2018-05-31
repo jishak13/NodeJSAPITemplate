@@ -1,5 +1,5 @@
 // Initialization
-  //Node Packages Module
+//Node Packages Module
 var express = require('express');
 var bodyParser = require('body-parser')
 var path = require('path');
@@ -21,13 +21,14 @@ let teams = require('../JSON/teams');
 let matches = require('../JSON/matches');
 let players = require('../JSON/players');
 
-// Set the port number
-// router.listen(8095);
+//Set the port number
+//Router.listen(8095);
 //Router usage: Log to the console time any http protocol gets used ( Get, Put , Post Delete )
 router.use( (req,res,next) => {
     console.log('Time: ' , Date.now()); 
     next();
   });
+
 router.get('/newmatch',(req,res)=>{
   request('http://www.worldcupapi.site/stadiums?apikey=a5edd31293441eef3119a650211d4a1acd0c57214cbd1d3a&lang=en',(err,resp,bod)=>{
     res.send(bod);
